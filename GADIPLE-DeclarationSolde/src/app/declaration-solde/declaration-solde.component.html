@@ -1,0 +1,29 @@
+<div class="form-group margin-top-10px" *ngIf="!user.start">
+  <form [formGroup]="userForm" (ngSubmit)="onSubmitBio()">
+    <label for="nom">
+      Nom:
+      <input type="text" class="form-control" id="nom" formControlName="nom" />
+    </label>
+
+    <br />
+
+    <label for="dateFDC">
+      Date FDC:
+      <input
+        type="date"
+        class="form-control"
+        id="dateFDC"
+        formControlName="dateFDC"
+      />
+    </label>
+
+    <br />
+
+    <button class="btn btn-primary" type="submit" [disabled]="userForm.invalid">
+      Ok
+    </button>
+  </form>
+</div>
+<ul class="list-group" *ngIf="user.start">
+  <app-solde-mois></app-solde-mois>
+</ul>

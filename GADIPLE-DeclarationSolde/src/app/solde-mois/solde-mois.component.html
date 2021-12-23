@@ -1,0 +1,21 @@
+<form [formGroup]="soldForm" (ngSubmit)="onSubmitSolde()">
+  <li
+    [ngClass]="{
+      'list-group-item': true,
+      'margin-top-10px': true
+    }"
+    *ngFor="let datePay of user.MonthPay; let idx = index"
+  >
+    <h4>Solde de mois {{ datePay | date: "MMMM, YYYY" }}</h4>
+    <!-- <h4>Solde de mois</h4> -->
+    Solde de base:
+    <input class="form-control" type="number" [formControlName]="'sb' + idx" />
+    Solde familial:
+    <input class="form-control" type="number" [formControlName]="'sf' + idx" />
+    Idemnité residance:
+    <input class="form-control" type="number" [formControlName]="'ir' + idx" />
+  </li>
+  <button class="btn btn-primary" type="submit" [disabled]="soldForm.invalid">
+    Ok
+  </button>
+</form>

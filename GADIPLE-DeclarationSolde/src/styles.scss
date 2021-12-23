@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+.alignement {
+  display: flex;
+  justify-content: center;
+}
+
+.start-declaration {
+  margin: 10vh
+}
+
+.margin-top-10px {
+  margin-top: 20px;
+}
+
+.margin-botton-10px {
+  margin-bottom: 10px;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
