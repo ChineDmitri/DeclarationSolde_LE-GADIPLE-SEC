@@ -7,14 +7,23 @@
     *ngFor="let datePay of user.MonthPay; let idx = index"
   >
     <h4>Solde de mois {{ datePay | date: "MMMM, YYYY" }}</h4>
-    <!-- <h4>Solde de mois</h4> -->
-    Solde de base:
-    <input class="form-control" type="number" [formControlName]="'sb' + idx" />
-    Solde familial:
-    <input class="form-control" type="number" [formControlName]="'sf' + idx" />
-    Idemnité residance:
-    <input class="form-control" type="number" [formControlName]="'ir' + idx" />
+
+    <div formArrayName="sb">
+      Solde de base:
+      <input class="form-control" type="number" [formControlName]="idx" />
+    </div>
+
+    <div formArrayName="sf">
+      Solde familial:
+      <input class="form-control" type="number" [formControlName]="idx" />
+    </div>
+
+    <div formArrayName="ir">
+      Idemnité residance:
+      <input class="form-control" type="number" [formControlName]="idx" />
+    </div>
   </li>
+
   <button class="btn btn-primary" type="submit" [disabled]="soldForm.invalid">
     Ok
   </button>

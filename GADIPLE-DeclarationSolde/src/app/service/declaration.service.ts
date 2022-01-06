@@ -1,4 +1,3 @@
-import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { User } from '../models/User.model';
 
@@ -9,7 +8,7 @@ export class DeclarationService {
     dateFDC_str: '',
     dateFDC_utc: '',
     MonthPay: new Array(),
-    MontSolde: new Array(),
+    MonthSolde: new Array(),
   };
 
   declarationSubject = new Subject<User>();
@@ -28,8 +27,9 @@ export class DeclarationService {
     return new Date(Number(year), month - 1, Number(day));
   }
 
+  /* Create array date 36 mount */
   arrayOfDate(): void {
-    for (let i = 0; i <= 5; i++) {
+    for (let i = 0; i < 37; i++) {
       // initialize date FDC
       let copyDateFDC_utc = new Date(this.user.dateFDC_utc.getTime());
       // decriment month

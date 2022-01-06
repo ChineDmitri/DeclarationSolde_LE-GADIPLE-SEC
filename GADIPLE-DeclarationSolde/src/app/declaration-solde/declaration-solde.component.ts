@@ -27,15 +27,13 @@ export class DeclarationSoldeComponent implements OnInit, OnDestroy {
         this.user = user;
       });
 
-    console.log(this.user);
-
     this.declarationService.emitDeclaration();
   }
 
   initForm(): void {
     this.userForm = this.formBuilder.group({
-      // nom: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
-      nom: [''],
+      // nom: [''],
+      nom: ['', [Validators.required, Validators.pattern(/^[A-Z]+$/i)]],
       dateFDC: ['', [Validators.required]],
     });
   }
