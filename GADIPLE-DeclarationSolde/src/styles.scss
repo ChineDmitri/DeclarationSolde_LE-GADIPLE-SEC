@@ -1,21 +1,35 @@
 /* You can add global styles to this file, and also import other style files */
 
+.container {
+  padding: 5px 50px;
+  width: 400px;
+  @media screen and (max-width: 400px) {
+    width: 100%;
+  }
+}
+
 .alignement {
   display: flex;
   justify-content: center;
 }
 
 .start-declaration {
-  margin: 10vh
+  margin: 10vh;
 }
 
 .margin-top-10px {
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 .margin-botton-10px {
   margin-bottom: 10px;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

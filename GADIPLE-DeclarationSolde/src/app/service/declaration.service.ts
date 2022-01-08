@@ -17,12 +17,13 @@ export class DeclarationService {
     this.declarationSubject.next(this.user);
   }
 
-  exo: Date;
-
   strDateParse(strDate: string): Date {
     let year = strDate.slice(0, 4);
     let day = strDate.slice(8, 10);
-    let month = Number(day) >= 24 ? parseInt(strDate.slice(5, 7)) : parseInt(strDate.slice(5, 7)) - 1;
+    let month =
+      Number(day) >= 24
+        ? parseInt(strDate.slice(5, 7))
+        : parseInt(strDate.slice(5, 7)) - 1;
 
     return new Date(Number(year), month - 1, Number(day));
   }
@@ -39,10 +40,22 @@ export class DeclarationService {
 
       this.user.MonthPay.push(copyDateFDC_utc);
     }
+
+    this.emitDeclaration();
   }
 
   addBio(newUser: User) {
     this.user = newUser;
+
+    this.emitDeclaration();
+  }
+
+  addSoldsMonths(formValue: any): void {
+    for (let i = 0; i < 37; i++) {
+      this.user.MonthSolde.push(
+        formValue.sb[i] + formValue.sf[i] + formValue.ir[i]
+      );
+    }
 
     this.emitDeclaration();
   }
