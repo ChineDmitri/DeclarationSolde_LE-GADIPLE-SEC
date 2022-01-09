@@ -1,7 +1,13 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { User } from '../models/User.model';
 
+@Injectable()
 export class DeclarationService {
+  declarationSubject = new Subject<User>();
+
   private user: User = {
     start: false,
     nom: '',
@@ -11,7 +17,11 @@ export class DeclarationService {
     MonthSolde: new Array(),
   };
 
-  declarationSubject = new Subject<User>();
+  test() {
+    console.log(this.user)
+  }
+
+  constructor(private httpClient: HttpClient, private router: Router) {}
 
   emitDeclaration() {
     this.declarationSubject.next(this.user);
@@ -50,7 +60,7 @@ export class DeclarationService {
     this.emitDeclaration();
   }
 
-  addSoldsMonths(formValue: any): void {
+  saveUserToServer(formValue: any): void {
     for (let i = 0; i < 37; i++) {
       this.user.MonthSolde.push(
         formValue.sb[i] + formValue.sf[i] + formValue.ir[i]
@@ -58,5 +68,18 @@ export class DeclarationService {
     }
 
     this.emitDeclaration();
+
+    this.httpClient
+      .post<User>('http://localhost:3000/api/user/create', this.user)
+      .subscribe(
+        (res) => {
+          console.log(res, 'OK!');
+
+          this.router.navigate(['/']);
+        },
+        (err) => {
+          console.log(err);
+        }
+      );
   }
 }

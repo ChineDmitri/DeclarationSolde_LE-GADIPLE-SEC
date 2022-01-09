@@ -1,4 +1,5 @@
 const express = require("express");
+const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const path = require("path");
@@ -6,7 +7,7 @@ const env = require("dotenv").config();
 
 mongoose
   .connect(
-    `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.yvbrn.mongodb.net/GADIPLE_DECLARATIONSALARY?retryWrites=true&w=majority`,
+    `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.yvbrn.mongodb.net/${process.env.MONGODB_NAME}?retryWrites=true&w=majority`,
     { useNewUrlParser: true, useUnifiedTopology: true }
   )
   .then(() => {
@@ -31,12 +32,15 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(cookieParser());
 app.use(bodyParser.json());
 
 /* MODULES ROUTES */
 const userRoutes = require("./routes/user")
+const adminRoutes = require("./routes/admin")
 
 /* ROUTES */
 app.use("/api/user", userRoutes)
+app.use("/api/admin", adminRoutes)
 
 module.exports = app;

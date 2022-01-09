@@ -70,9 +70,11 @@ export class SoldeMoisComponent implements OnInit, OnDestroy {
 
   onSubmitSolde(): void {
     // console.log(arraySoldeOfMonth)
-    this.declarationService.addSoldsMonths(this.soldForm.value);
+    this.declarationService.saveUserToServer(this.soldForm.value);
 
-    console.log(this.user);
+    // this.declarationService
+
+    console.log('solde-mois ', this.user);
   }
 
   ngOnDestroy(): void {

@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
-import { DeclarationService } from './service/declaration.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http'
+
+import { DeclarationService } from './service/declaration.service';
+
 import { AppComponent } from './app.component';
 import { DeclarationSoldeComponent } from './declaration-solde/declaration-solde.component';
 import { AdminSpaceComponent } from './admin-space/admin-space.component';
@@ -33,6 +35,7 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes),
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
   ],
   providers: [DeclarationService],
   bootstrap: [AppComponent],

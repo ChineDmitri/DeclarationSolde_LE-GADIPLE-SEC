@@ -1,9 +1,5 @@
 const User = require("../models/User");
 
-exports.test = (req, res, next) => {
-  res.status(200).json({ test: "OK!" });
-};
-
 exports.create = (req, res, next) => {
   const user = new User({
     nom: req.body.nom,
@@ -18,6 +14,26 @@ exports.create = (req, res, next) => {
       res.status(200).json({ msg: "OK!" });
     })
     .catch((err) => {
-        res.status(500).json({ err });
+      res.status(500).json({ err });
+    });
+};
+
+exports.getAllUser = (req, res, next) => {
+  User.find()
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+};
+
+exports.getOneUser = (req, res, next) => {
+  User.findOne({ _id: req.params.id })
+    .then((user) => {
+      res.status(200).json(user);
+    })
+    .catch((err) => {
+      res.status(500).then(err);
     });
 };

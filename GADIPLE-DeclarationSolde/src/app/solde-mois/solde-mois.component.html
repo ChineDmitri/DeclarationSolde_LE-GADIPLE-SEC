@@ -34,6 +34,8 @@
     </div>
   </li>
 
+  <br />
+
   <div class="form-check declarationTitle">
     <label class="form-check-label" for="flexCheckDefault">
       <input
@@ -48,7 +50,11 @@
     </label>
   </div>
 
-  <button class="btn btn-primary" type="submit" [disabled]="soldForm.invalid">
+  <button
+    class="btn btn-primary col-xs-12"
+    type="submit"
+    [disabled]="soldForm.invalid"
+  >
     Ok
   </button>
 </form>
