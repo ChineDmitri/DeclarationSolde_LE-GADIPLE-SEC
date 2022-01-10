@@ -12,6 +12,7 @@ import { DeclarationSoldeComponent } from './declaration-solde/declaration-solde
 import { AdminSpaceComponent } from './admin-space/admin-space.component';
 import { MainComponent } from './main/main.component';
 import { SoldeMoisComponent } from './solde-mois/solde-mois.component';
+import { UserListComponent } from './user-list/user-list.component';
 
 
 const appRoutes: Routes = [
@@ -28,6 +29,7 @@ const appRoutes: Routes = [
     AdminSpaceComponent,
     MainComponent,
     SoldeMoisComponent,
+    UserListComponent,
   ],
   imports: [
     BrowserModule,

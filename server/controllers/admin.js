@@ -1,4 +1,5 @@
 const Admin = require("../models/Admin");
+const User = require("../models/User");
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -40,9 +41,12 @@ exports.login = (req, res, next) => {
             return res.status(401).json({ message: "Password is wrong!" });
           }
 
-          const token = jwt.sign({ adminId: admin._id }, process.env.JWT_KEY);
+          const acces_token = jwt.sign(
+            { adminId: admin._id },
+            process.env.JWT_KEY
+          );
 
-          res.cookie("token", token, {
+          res.cookie("token_data", acces_token, {
             maxAge: 60000 * 60,
             httpOnly: true,
             // secure: true,
@@ -59,5 +63,25 @@ exports.login = (req, res, next) => {
     })
     .catch((err) => {
       res.status(500).json(err);
+    });
+};
+
+exports.getAllUser = (req, res, next) => {
+  User.find()
+    .then((users) => {
+      res.status(200).json(users);
+    })
+    .catch((err) => {
+      res.status(500).json(err);
+    });
+};
+
+exports.getOneUser = (req, res, next) => {
+  User.findOne({ _id: req.params.id })
+    .then((user) => {
+      res.status(200).json(user);
+    })
+    .catch((err) => {
+      res.status(500).then(err);
     });
 };

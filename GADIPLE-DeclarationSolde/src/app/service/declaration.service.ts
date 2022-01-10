@@ -18,7 +18,7 @@ export class DeclarationService {
   };
 
   test() {
-    console.log(this.user)
+    console.log(this.user);
   }
 
   constructor(private httpClient: HttpClient, private router: Router) {}
