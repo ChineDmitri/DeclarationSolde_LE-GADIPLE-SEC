@@ -3,9 +3,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http';
 
 import { DeclarationService } from './service/declaration.service';
+import { AuthAdminService } from './service/authAdmin.service';
+import { AuthAdminGuard } from './service/authAdmin-guard.service';
 
 import { AppComponent } from './app.component';
 import { DeclarationSoldeComponent } from './declaration-solde/declaration-solde.component';
@@ -14,12 +16,12 @@ import { MainComponent } from './main/main.component';
 import { SoldeMoisComponent } from './solde-mois/solde-mois.component';
 import { UserListComponent } from './user-list/user-list.component';
 
-
 const appRoutes: Routes = [
   { path: '', component: MainComponent },
   { path: 'acceuil', component: MainComponent },
   { path: 'declaration', component: DeclarationSoldeComponent },
   { path: 'admin', component: AdminSpaceComponent },
+  { path: 'admin/allusers', canActivate: [AuthAdminGuard], component: UserListComponent },
 ];
 
 @NgModule({
@@ -39,7 +41,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [DeclarationService],
+  providers: [DeclarationService, AuthAdminService, AuthAdminGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

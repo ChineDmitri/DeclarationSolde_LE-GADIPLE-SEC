@@ -20,13 +20,13 @@ module.exports = (req, res, next) => {
         if (admin._id.toString() == adminId) {
           next();
         } else {
-          res.status(401).json({ error: err, auth: false });
+          res.status(401).json({ error: err, isAuth: false });
         }
       })
       .catch((err) => {
-        res.status(401).json({ error: err, auth: false });
+        res.status(401).json({ error: err, isAuth: false });
       });
   } catch (err) {
-    res.status(401).json({ error: err, auth: false });
+    res.status(401).json({ error: err, isAuth: false });
   }
 };

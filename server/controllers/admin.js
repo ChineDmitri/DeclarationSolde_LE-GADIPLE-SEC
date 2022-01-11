@@ -54,7 +54,7 @@ exports.login = (req, res, next) => {
 
           res.status(200).json({
             message: "Auth -> OK",
-            auth: true,
+            isAuth: true,
           });
         })
         .catch((err) => {
@@ -69,19 +69,19 @@ exports.login = (req, res, next) => {
 exports.getAllUser = (req, res, next) => {
   User.find()
     .then((users) => {
-      res.status(200).json(users);
+      res.status(200).json({ isAuth: true, users });
     })
     .catch((err) => {
-      res.status(500).json(err);
+      res.status(500).json({ isAuth: true, err });
     });
 };
 
 exports.getOneUser = (req, res, next) => {
   User.findOne({ _id: req.params.id })
     .then((user) => {
-      res.status(200).json(user);
+      res.status(200).json({ isAuth: true, user });
     })
     .catch((err) => {
-      res.status(500).then(err);
+      res.status(500).then({ isAuth: true, err });
     });
 };
