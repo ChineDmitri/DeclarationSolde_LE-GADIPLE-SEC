@@ -11,22 +11,22 @@ import { DeclarationService } from '../service/declaration.service';
 })
 export class SoldeMoisComponent implements OnInit, OnDestroy {
   soldForm: FormGroup;
+
+  MonthPaySubscription: Subscription;
+
   user: User;
-  userSubscription: Subscription;
+  MonthPay: Array<any> = [];
+
   // arrDatePay: any[];
 
-  constructor(
-    private declarationService: DeclarationService,
-    private formBuilder: FormBuilder
-  ) {}
+  constructor(private declarationService: DeclarationService, private formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
     this.initForm();
 
-    this.userSubscription =
-      this.declarationService.declarationSubject.subscribe((user: User) => {
-        this.user = user;
-      });
+    this.MonthPaySubscription = this.declarationService.MonthPaySubject.subscribe((MonthPay: any[]) => {
+      this.MonthPay = MonthPay;
+    });
 
     this.declarationService.arrayOfDate();
 
@@ -77,8 +77,6 @@ export class SoldeMoisComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.user.start = false;
-
-    this.userSubscription.unsubscribe();
+    this.MonthPaySubscription.unsubscribe();
   }
 }

@@ -24,16 +24,9 @@ export class AdminSpaceComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initForm();
 
-    // console.log('admin', this.authAdminService.admin);
-
     this.isLoadingSubscription = this.authAdminService.getIsLoading().subscribe((log) => {
       this.isVisible = !log; /* REVERSE */
-      // !this.isVisible; /* REVERSE */
-      // console.log('admin pannel', this.isVisible);
-      // this.isLoad = !this.isLoad;
     });
-
-    // console.log('passwordf, ', this.isLoad);
 
     this.authAdminService.onHendlerAuth();
   }

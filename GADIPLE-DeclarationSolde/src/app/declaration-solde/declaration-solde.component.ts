@@ -11,21 +11,19 @@ import { Subscription } from 'rxjs';
 })
 export class DeclarationSoldeComponent implements OnInit, OnDestroy {
   userForm: FormGroup;
-  user: User;
+
   userSubscription: Subscription;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private declarationService: DeclarationService
-  ) {}
+  user: User;
+
+  constructor(private formBuilder: FormBuilder, private declarationService: DeclarationService) {}
 
   ngOnInit(): void {
     this.initForm();
 
-    this.userSubscription =
-      this.declarationService.declarationSubject.subscribe((user: User) => {
-        this.user = user;
-      });
+    this.userSubscription = this.declarationService.declarationSubject.subscribe((user: User) => {
+      this.user = user;
+    });
 
     this.declarationService.emitDeclaration();
   }
@@ -42,18 +40,19 @@ export class DeclarationSoldeComponent implements OnInit, OnDestroy {
     const formValue = this.userForm.value;
 
     const newUser = new User(
+      Date.now(),
       true,
       formValue['nom'],
       formValue['dateFDC'],
       this.declarationService.strDateParse(formValue['dateFDC']),
       [],
-      []
     );
 
     this.declarationService.addBio(newUser);
   }
 
   ngOnDestroy(): void {
+    this.declarationService.initBio();
     this.userSubscription.unsubscribe();
   }
 }

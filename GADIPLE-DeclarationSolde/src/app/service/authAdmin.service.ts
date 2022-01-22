@@ -14,7 +14,8 @@ export class AuthAdminService {
     isAuth: false,
   };
 
-  isLoading = new BehaviorSubject(true);
+  // TRUE if loading in progress; FALSE if response from server finished;
+  isLoading = new BehaviorSubject(false);
 
   // onLoading(): Observable<boolean> {
   //   return this.loading;

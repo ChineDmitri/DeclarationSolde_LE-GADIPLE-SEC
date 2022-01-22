@@ -8,15 +8,18 @@ import { User } from '../models/User.model';
 @Injectable()
 export class DeclarationService {
   declarationSubject = new Subject<User>();
+  MonthPaySubject = new Subject<any[]>();
 
   private user: User = {
+    dateDeclaration: Date.now(),
     start: false,
     nom: '',
     dateFDC_str: '',
     dateFDC_utc: '',
-    MonthPay: new Array(),
     MonthSolde: new Array(),
   };
+
+  MonthPay: Array<any> = [];
 
   test() {
     console.log(this.user);
@@ -28,11 +31,14 @@ export class DeclarationService {
     this.declarationSubject.next(this.user);
   }
 
+  setMonthPay() {
+    this.MonthPaySubject.next(this.MonthPay.slice());
+  }
+
   strDateParse(strDate: string): Date {
     const year = strDate.slice(0, 4);
     const day = strDate.slice(8, 10);
-    const month =
-      Number(day) >= 24 ? parseInt(strDate.slice(5, 7)) : parseInt(strDate.slice(5, 7)) - 1;
+    const month = Number(day) >= 24 ? parseInt(strDate.slice(5, 7)) : parseInt(strDate.slice(5, 7)) - 1;
 
     return new Date(Number(year), month - 1, Number(day));
   }
@@ -44,13 +50,11 @@ export class DeclarationService {
       const copyDateFDC_utc = new Date(this.user.dateFDC_utc.getTime());
       // decriment month
       copyDateFDC_utc.setMonth(copyDateFDC_utc.getMonth() - i);
-
-      // console.log(copyDateFDC_utc);
-
-      this.user.MonthPay.push(copyDateFDC_utc);
+      //creation array of motnhs pay
+      this.MonthPay.push(copyDateFDC_utc);
     }
 
-    this.emitDeclaration();
+    this.setMonthPay();
   }
 
   addBio(newUser: User) {
@@ -59,10 +63,21 @@ export class DeclarationService {
     this.emitDeclaration();
   }
 
+  // Initialize bio if user quitted declaration
+  initBio() {
+    this.user = new User('', false, '', '', '', []);
+    this.MonthPay = [];
+
+    this.emitDeclaration();
+    this.setMonthPay();
+  }
+
   saveUserToServer(formValue: any): void {
     for (let i = 0; i < 37; i++) {
       this.user.MonthSolde.push(formValue.sb[i] + formValue.sf[i] + formValue.ir[i]);
     }
+
+    console.log(this.user);
 
     this.emitDeclaration();
 
@@ -76,5 +91,7 @@ export class DeclarationService {
         console.log(err);
       },
     );
+
+    this.user.start = false;
   }
 }

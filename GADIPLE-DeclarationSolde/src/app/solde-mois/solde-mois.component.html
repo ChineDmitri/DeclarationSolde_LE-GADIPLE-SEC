@@ -4,7 +4,7 @@
       'list-group-item': true,
       'margin-top-10px': true
     }"
-    *ngFor="let datePay of user.MonthPay; let idx = index"
+    *ngFor="let datePay of MonthPay; let idx = index"
   >
     <h4>Solde de mois {{ datePay | date: "MMMM, YYYY" }}</h4>
 

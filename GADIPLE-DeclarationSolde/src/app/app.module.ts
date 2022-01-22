@@ -17,7 +17,7 @@ import { MainComponent } from './main/main.component';
 import { SoldeMoisComponent } from './solde-mois/solde-mois.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { OneUserComponent } from './one-user/one-user.component';
-import { SpinnerComponent } from './service/authAdmin-guard.service';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent },
