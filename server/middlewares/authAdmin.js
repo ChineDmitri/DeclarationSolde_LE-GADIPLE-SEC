@@ -1,9 +1,7 @@
-const jwt = require("jsonwebtoken");
-const Admin = require("../models/Admin");
+const jwt = require('jsonwebtoken');
+const Admin = require('../models/Admin');
 
 module.exports = (req, res, next) => {
-  console.log("test");
-
   try {
     const token = req.cookies.token_data;
 
@@ -15,12 +13,12 @@ module.exports = (req, res, next) => {
 
     Admin.findOne({ _id: adminId })
       .then((admin) => {
-        console.log("find one", admin._id.toString());
+        console.log('find one', admin._id.toString());
 
         if (admin._id.toString() == adminId) {
           next();
         } else {
-          res.status(401).json({ error: err, isAuth: false });
+          res.status(401).json({ error: '401 stop', isAuth: false });
         }
       })
       .catch((err) => {

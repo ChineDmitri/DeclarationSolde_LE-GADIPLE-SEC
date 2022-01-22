@@ -29,12 +29,10 @@ export class DeclarationService {
   }
 
   strDateParse(strDate: string): Date {
-    let year = strDate.slice(0, 4);
-    let day = strDate.slice(8, 10);
-    let month =
-      Number(day) >= 24
-        ? parseInt(strDate.slice(5, 7))
-        : parseInt(strDate.slice(5, 7)) - 1;
+    const year = strDate.slice(0, 4);
+    const day = strDate.slice(8, 10);
+    const month =
+      Number(day) >= 24 ? parseInt(strDate.slice(5, 7)) : parseInt(strDate.slice(5, 7)) - 1;
 
     return new Date(Number(year), month - 1, Number(day));
   }
@@ -43,7 +41,7 @@ export class DeclarationService {
   arrayOfDate(): void {
     for (let i = 0; i < 37; i++) {
       // initialize date FDC
-      let copyDateFDC_utc = new Date(this.user.dateFDC_utc.getTime());
+      const copyDateFDC_utc = new Date(this.user.dateFDC_utc.getTime());
       // decriment month
       copyDateFDC_utc.setMonth(copyDateFDC_utc.getMonth() - i);
 
@@ -63,24 +61,20 @@ export class DeclarationService {
 
   saveUserToServer(formValue: any): void {
     for (let i = 0; i < 37; i++) {
-      this.user.MonthSolde.push(
-        formValue.sb[i] + formValue.sf[i] + formValue.ir[i]
-      );
+      this.user.MonthSolde.push(formValue.sb[i] + formValue.sf[i] + formValue.ir[i]);
     }
 
     this.emitDeclaration();
 
-    this.httpClient
-      .post<User>('http://localhost:3000/api/user/create', this.user)
-      .subscribe(
-        (res) => {
-          console.log(res, 'OK!');
+    this.httpClient.post<User>('http://localhost:3000/api/user/create', this.user).subscribe(
+      (res) => {
+        console.log(res, 'OK!');
 
-          this.router.navigate(['/']);
-        },
-        (err) => {
-          console.log(err);
-        }
-      );
+        this.router.navigate(['/']);
+      },
+      (err) => {
+        console.log(err);
+      },
+    );
   }
 }

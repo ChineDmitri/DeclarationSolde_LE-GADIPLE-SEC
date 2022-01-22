@@ -1,11 +1,11 @@
-const Admin = require("../models/Admin");
-const User = require("../models/User");
+const Admin = require('../models/Admin');
+const User = require('../models/User');
 
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv").config();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+// const dotenv = require('dotenv').config();
 
-exports.modification = (req, res, next) => {
+exports.modification = (req, res) => {
   bcrypt
     .hash(req.body.password, 10)
     .then((hashPassword) => {
@@ -17,7 +17,7 @@ exports.modification = (req, res, next) => {
         .save()
         .then(() => {
           res.status(201).json({
-            message: "Password was changed!",
+            message: 'Password was changed!',
           });
         })
         .catch((err) => {
@@ -29,7 +29,7 @@ exports.modification = (req, res, next) => {
     });
 };
 
-exports.login = (req, res, next) => {
+exports.login = (req, res) => {
   console.log(process.env.ADMIN_ID);
 
   Admin.findOne({ _id: process.env.ADMIN_ID })
@@ -38,22 +38,19 @@ exports.login = (req, res, next) => {
         .compare(req.body.password, admin.password)
         .then((valid) => {
           if (!valid) {
-            return res.status(401).json({ message: "Password is wrong!" });
+            return res.status(401).json({ message: 'Password is wrong!' });
           }
 
-          const acces_token = jwt.sign(
-            { adminId: admin._id },
-            process.env.JWT_KEY
-          );
+          const acces_token = jwt.sign({ adminId: admin._id }, process.env.JWT_KEY);
 
-          res.cookie("token_data", acces_token, {
+          res.cookie('token_data', acces_token, {
             maxAge: 60000 * 60,
             httpOnly: true,
             // secure: true,
           });
 
           res.status(200).json({
-            message: "Auth -> OK",
+            message: 'Auth -> OK',
             isAuth: true,
           });
         })
@@ -66,7 +63,7 @@ exports.login = (req, res, next) => {
     });
 };
 
-exports.getAllUser = (req, res, next) => {
+exports.getAllUser = (req, res) => {
   User.find()
     .then((users) => {
       res.status(200).json({ isAuth: true, users });
@@ -76,7 +73,7 @@ exports.getAllUser = (req, res, next) => {
     });
 };
 
-exports.getOneUser = (req, res, next) => {
+exports.getOneUser = (req, res) => {
   User.findOne({ _id: req.params.id })
     .then((user) => {
       res.status(200).json({ isAuth: true, user });
@@ -84,4 +81,24 @@ exports.getOneUser = (req, res, next) => {
     .catch((err) => {
       res.status(500).then({ isAuth: true, err });
     });
+};
+
+exports.cookieHandler = (req, res) => {
+  try {
+    const token = req.cookies.token_data;
+
+    const decodedToken = jwt.verify(token, process.env.JWT_KEY);
+
+    const adminId = decodedToken.adminId;
+
+    console.log('tok', adminId);
+
+    if (adminId) {
+      res.status(200).json({ isAuth: true });
+    } else {
+      throw 'You are not administrator!';
+    }
+  } catch (err) {
+    res.status(500).json({ ...err, isAuth: false });
+  }
 };

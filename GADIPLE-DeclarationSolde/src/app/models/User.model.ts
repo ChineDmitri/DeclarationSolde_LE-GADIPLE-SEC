@@ -5,6 +5,6 @@ export class User {
     public dateFDC_str: string,
     public dateFDC_utc: any,
     public MonthPay: any[],
-    public MonthSolde: number[]
+    public MonthSolde: Number[]
   ) {}
 }

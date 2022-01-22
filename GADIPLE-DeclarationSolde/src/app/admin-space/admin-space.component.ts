@@ -1,32 +1,41 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+// import { AdminService } from '../service/admin.service';
 import { AuthAdminService } from '../service/authAdmin.service';
 
 import { Admin } from '../models/Admin.model';
-import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-admin-space',
   templateUrl: './admin-space.component.html',
   styleUrls: ['./admin-space.component.scss'],
 })
-export class AdminSpaceComponent implements OnInit {
+export class AdminSpaceComponent implements OnInit, OnDestroy {
   adminForm: FormGroup;
   admin: Admin;
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private authAdminservice: AuthAdminService,
-    private router: Router
-  ) {}
+  isVisible: boolean = true;
+  isLoadingSubscription: Subscription;
+
+  constructor(private formBuilder: FormBuilder, private authAdminService: AuthAdminService) {}
 
   ngOnInit(): void {
     this.initForm();
 
-    this.authAdminservice.onTestAuth();
+    // console.log('admin', this.authAdminService.admin);
 
-    this.authAdminservice.onRedirect();
+    this.isLoadingSubscription = this.authAdminService.getIsLoading().subscribe((log) => {
+      this.isVisible = !log; /* REVERSE */
+      // !this.isVisible; /* REVERSE */
+      // console.log('admin pannel', this.isVisible);
+      // this.isLoad = !this.isLoad;
+    });
+
+    // console.log('passwordf, ', this.isLoad);
+
+    this.authAdminService.onHendlerAuth();
   }
 
   initForm(): void {
@@ -36,6 +45,10 @@ export class AdminSpaceComponent implements OnInit {
   }
 
   onSubmitAdminForm(): void {
-    this.authAdminservice.onLogIn(this.adminForm.value.password);
+    this.authAdminService.onLogIn(this.adminForm.value.password);
+  }
+
+  ngOnDestroy(): void {
+    this.isLoadingSubscription.unsubscribe();
   }
 }

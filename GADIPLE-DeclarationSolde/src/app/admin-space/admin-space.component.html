@@ -1,23 +1,13 @@
-<div class="form-group margin-top-10px">
+<div class="form-group margin-top-10px" *ngIf="isVisible">
   <form [formGroup]="adminForm" (ngSubmit)="onSubmitAdminForm()">
     <label for="password">
       Password:
-      <input
-        type="password"
-        class="form-control"
-        id="password"
-        formControlName="password"
-      />
+      <input type="password" class="form-control" id="password" formControlName="password" />
     </label>
 
     <br />
 
-    <button
-      class="btn btn-primary col-xs-12"
-      type="submit"
-      [disabled]="adminForm.invalid"
-    >
-      Ok
-    </button>
+    <button class="btn btn-primary col-xs-12" type="submit" [disabled]="adminForm.invalid">Ok</button>
   </form>
 </div>
+<app-spinner></app-spinner>

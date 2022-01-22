@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { Admin } from '../models/Admin.model';
 
@@ -13,49 +14,69 @@ export class AuthAdminService {
     isAuth: false,
   };
 
-  onTestAuth() {
-    this.httpClient
-      .get('http://localhost:3000/api/admin/all', { withCredentials: true })
-      .subscribe(
-        (res: any) => {
-          console.log(res);
+  isLoading = new BehaviorSubject(true);
 
-          this.admin.isAuth = res.isAuth;
+  // onLoading(): Observable<boolean> {
+  //   return this.loading;
+  // }
 
-          this.onRedirect();
-        },
-        (err: any) => {
-          console.log(err);
+  getIsLoading(): Observable<boolean> {
+    return this.isLoading;
+  }
 
-          this.admin.isAuth = err.isAuth;
+  setIsLoading(state: boolean): void {
+    // console.log('onLoading', state);
+    this.isLoading.next(state);
+  }
 
-          this.onRedirect();
-        }
-      );
+  onHendlerAuth() {
+    this.setIsLoading(true);
+
+    this.httpClient.get('http://localhost:3000/api/admin/isAuth', { withCredentials: true }).subscribe(
+      (res: any) => {
+        this.admin.isAuth = res.isAuth;
+
+        this.setIsLoading(false);
+
+        this.onRedirect();
+      },
+      (err: any) => {
+        this.admin.isAuth = err.isAuth;
+
+        this.setIsLoading(false);
+
+        console.log('wtf?!');
+
+        this.onRedirect();
+      },
+    );
   }
 
   onLogIn(password: string) {
-    this.admin.password = password;
+    this.setIsLoading(true);
 
+    this.admin.password = password;
     this.httpClient
-      .post<Admin>('http://localhost:3000/api/admin/login', this.admin, {
-        withCredentials: true,
-      })
+      .post<Admin>('http://localhost:3000/api/admin/login', { password }, { withCredentials: true })
       .subscribe(
         (res: any) => {
-          console.log(res);
+          // console.log(res);
+
+          this.setIsLoading(false);
 
           this.admin.isAuth = res.isAuth;
 
           this.onRedirect();
         },
         (err: any) => {
-          console.log(err);
+          // console.log(err);
+
+          this.setIsLoading(false);
 
           this.admin.isAuth = err.isAuth;
 
           this.onRedirect();
-        }
+        },
       );
   }
 

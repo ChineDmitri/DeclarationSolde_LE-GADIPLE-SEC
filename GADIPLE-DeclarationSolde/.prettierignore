@@ -1,0 +1,11 @@
+/e2e
+!/projects
+!/src
+assets/
+browserslist
+package*.json
+angular.json
+tsconfig*.json
+README.md
+karma.conf.js
+node_modules/
