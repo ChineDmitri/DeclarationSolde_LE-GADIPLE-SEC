@@ -1,13 +1,18 @@
-<ul class="list-group">
-  <li class="list-group-item">
-    <a routerLink="/admin/user/1">
-      <!-- *ngFor="let user of users; let idx = index" -->
-      <!-- <button class="btn btn-danger" (click)="onRemoveUser(idx)">X</button> -->
-      <h3>Chine</h3>
-    </a>
+<label for="thisWeek">
+  <input type="checkbox" id="thisWeek" (click)="showList()" />
+  <div class="background-h1">
+    <h1><i class="fas fa-filter"></i> Declaration de la semaine {{ dateToday | date: 'W' }}</h1>
+  </div>
 
-    <!-- <h3>{{ user.firstName }} {{ user.lastName }}</h3> -->
-    <p>RDC: 01/02/2022</p>
-    <!-- <p>{{ user.email }}</p> -->
-  </li>
-</ul>
+  <ul class="user-list" *ngIf="win" >
+    <app-one-user></app-one-user>
+    <app-one-user></app-one-user>
+    <app-one-user></app-one-user>
+    <app-one-user></app-one-user>
+    <app-one-user></app-one-user>
+    <app-one-user></app-one-user>
+    <app-one-user></app-one-user>
+    <app-one-user></app-one-user>
+    <app-one-user></app-one-user>
+  </ul>
+</label>

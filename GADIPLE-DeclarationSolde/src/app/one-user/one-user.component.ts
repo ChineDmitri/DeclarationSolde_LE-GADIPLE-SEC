@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { DeclarationService } from '../service/declaration.service';
+// import { DeclarationService } from '../service/declaration.service';
 // import { AdminService } from '../service/admin.service';
 
 import { User } from '../models/User.model';
@@ -15,7 +15,7 @@ export class OneUserComponent implements OnInit {
   user: User;
 
   constructor(
-    private declarationService: DeclarationService,
+    // private declarationService: DeclarationService,
     // private adminService: AdminService
   ) {}
 
@@ -24,6 +24,5 @@ export class OneUserComponent implements OnInit {
 
     // this.user = this.adminService.user;
 
-    console.log('one user', this.user);
   }
 }

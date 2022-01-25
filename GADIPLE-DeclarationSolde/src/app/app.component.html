@@ -1,5 +1,5 @@
 <nav class="navbar-default">
-  <div class="container-fluid">
+  <div class="container-fluid navbar-media">
     <ul class="nav navbar-nav">
       <li routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
         <a routerLink="/">Acceuil</a>
@@ -12,15 +12,15 @@
       </li>
     </ul>
     <div class="container-fluid navbar-right">
-      Aujourd'hui <b>{{ dateToday | date: "EEEE, MMMM d, y" }}</b>
+      Aujourd'hui <b>{{ dateToday | date: 'EEEE, MMMM d, y' }}</b>
       <br />
       Numero de la semaine:
-      <b>{{ dateToday | date: "w" }}</b>
+      <b>{{ dateToday | date: 'w' }}</b>
     </div>
   </div>
 </nav>
-<div class="container declarationArea">
-  <div class="row alignement">
+<div class="container content">
+  <div class="alignement container">
     <router-outlet></router-outlet>
   </div>
 </div>

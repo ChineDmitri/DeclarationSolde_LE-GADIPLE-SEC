@@ -91,14 +91,12 @@ exports.cookieHandler = (req, res) => {
 
     const adminId = decodedToken.adminId;
 
-    console.log('tok', adminId);
-
     if (adminId) {
       res.status(200).json({ isAuth: true });
     } else {
       throw 'You are not administrator!';
     }
   } catch (err) {
-    res.status(500).json({ ...err, isAuth: false });
+    res.status(401).json({ ...err, isAuth: false });
   }
 };
