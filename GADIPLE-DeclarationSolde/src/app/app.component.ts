@@ -16,5 +16,5 @@ export class AppComponent implements OnInit {
     // this.adminService.getAllUsers();
   }
 
-  dateToday = new Date();
+  dateToday = new Date(Date.now());
 }

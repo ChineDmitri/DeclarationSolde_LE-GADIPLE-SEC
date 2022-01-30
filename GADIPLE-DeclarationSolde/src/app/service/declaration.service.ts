@@ -11,6 +11,7 @@ export class DeclarationService {
   MonthPaySubject = new Subject<any[]>();
 
   private user: User = {
+    _id: '',
     dateDeclaration: Date.now(),
     start: false,
     nom: '',
@@ -65,7 +66,7 @@ export class DeclarationService {
 
   // Initialize bio if user quitted declaration
   initBio() {
-    this.user = new User('', false, '', '', '', []);
+    this.user = new User('', '', false, '', '', '', []);
     this.MonthPay = [];
 
     this.emitDeclaration();
@@ -79,7 +80,7 @@ export class DeclarationService {
 
     console.log(this.user);
 
-    this.emitDeclaration();
+    // this.emitDeclaration();
 
     this.httpClient.post<User>('http://localhost:3000/api/user/create', this.user).subscribe(
       (res) => {
@@ -92,6 +93,6 @@ export class DeclarationService {
       },
     );
 
-    this.user.start = false;
+    // this.user.start = false;
   }
 }

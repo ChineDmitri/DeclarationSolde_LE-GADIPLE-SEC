@@ -40,6 +40,7 @@ export class DeclarationSoldeComponent implements OnInit, OnDestroy {
     const formValue = this.userForm.value;
 
     const newUser = new User(
+      '',
       Date.now(),
       true,
       formValue['nom'],

@@ -1,6 +1,6 @@
-<li class="list-group-item border-space">
-  <a routerLink="/admin/user/1">
-    <h3>Chine</h3>
+<li class="list-group-item border-space one-user">
+  <a [routerLink]="'/admin/user/' + [_id]">
+    <h3>{{ name }}</h3>
   </a>
-  <p>RDC: 01/02/2022</p>
+  <p>RDC: {{ dateRDC | date: 'dd/MM/yy' }}</p>
 </li>

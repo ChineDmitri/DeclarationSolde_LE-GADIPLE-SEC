@@ -7,6 +7,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { DeclarationService } from './service/declaration.service';
 // import { AdminService } from './service/admin.service';
+import { AdminService } from './service/admin.service';
 import { AuthAdminService } from './service/authAdmin.service';
 import { AuthAdminGuard } from './service/authAdmin-guard.service';
 
@@ -47,7 +48,7 @@ const appRoutes: Routes = [
     ReactiveFormsModule,
     HttpClientModule,
   ],
-  providers: [DeclarationService, AuthAdminService, AuthAdminGuard],
+  providers: [DeclarationService, AuthAdminService, AuthAdminGuard, AdminService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

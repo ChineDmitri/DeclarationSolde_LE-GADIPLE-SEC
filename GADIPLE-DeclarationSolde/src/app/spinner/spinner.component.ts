@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+// import { Subscription } from 'rxjs';
 import { AuthAdminService } from '../service/authAdmin.service';
 
 @Component({
@@ -8,18 +8,18 @@ import { AuthAdminService } from '../service/authAdmin.service';
   styleUrls: ['./spinner.component.scss'],
 })
 export class SpinnerComponent implements OnInit, OnDestroy {
-  isLoad: boolean = true;
-  isLoadSubscription: Subscription;
+  @Input() isLoad: boolean;
+  // isLoadSubscription: Subscription;
 
   constructor(private adminAuthService: AuthAdminService) {
-    this.isLoadSubscription = this.adminAuthService.getIsLoading().subscribe((log) => {
-      this.isLoad = log;
-    });
+    // this.isLoadSubscription = this.adminAuthService.getIsLoading().subscribe((log) => {
+    //   this.isLoad = log;
+    // });
   }
 
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    this.isLoadSubscription.unsubscribe();
+    // this.isLoadSubscription.unsubscribe();
   }
 }

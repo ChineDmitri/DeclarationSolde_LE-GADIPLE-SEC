@@ -1,18 +1,34 @@
-<label for="thisWeek">
-  <input type="checkbox" id="thisWeek" (click)="showList()" />
-  <div class="background-h1">
-    <h1><i class="fas fa-filter"></i> Declaration de la semaine {{ dateToday | date: 'W' }}</h1>
-  </div>
+<div id="thisWeek" *ngIf="!isVisible">
+  <!-- <button (click)="getSub()" ></button> -->
+  <span class="background-h2 background-h2-checked">
+    <h2>Dernières déclarations depuis 7 jours.</h2>
+  </span>
 
-  <ul class="user-list" *ngIf="win" >
-    <app-one-user></app-one-user>
-    <app-one-user></app-one-user>
-    <app-one-user></app-one-user>
-    <app-one-user></app-one-user>
-    <app-one-user></app-one-user>
-    <app-one-user></app-one-user>
-    <app-one-user></app-one-user>
-    <app-one-user></app-one-user>
-    <app-one-user></app-one-user>
+  <ul class="user-list">
+    <app-one-user
+      *ngFor="let user of usersLastWeek"
+      [_id]="user._id"
+      [name]="user.nom"
+      [dateRDC]="user.dateFDC_utc"
+    ></app-one-user>
+  </ul>
+</div>
+
+<label for="otherWeek" data-info="oW" *ngIf="!isVisible">
+  <input type="checkbox" id="otherWeek" />
+
+  <span class="background-h2">
+    <h2><i class="fas fa-plus-square"></i>Les restes des déclarations</h2>
+  </span>
+
+  <ul class="user-list user-list-slider">
+    <app-one-user
+      *ngFor="let user of usersOtherWeeks"
+      [_id]="user._id"
+      [name]="user.nom"
+      [dateRDC]="user.dateFDC_utc"
+    ></app-one-user>
   </ul>
 </label>
+
+<app-spinner [isLoad]="isVisible"></app-spinner>

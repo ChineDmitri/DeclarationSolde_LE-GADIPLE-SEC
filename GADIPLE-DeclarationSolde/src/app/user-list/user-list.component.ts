@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-// import { AdminService } from '../service/admin.service';
+import { AdminService } from '../service/admin.service';
+import { AuthAdminService } from '../service/authAdmin.service';
 
-// import { User } from '../models/User.model';
+import { User } from '../models/User.model';
 
 @Component({
   selector: 'app-user-list',
@@ -11,41 +12,37 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./user-list.component.scss'],
 })
 export class UserListComponent implements OnInit, OnDestroy {
-  dateToday: any = new Date(Date.now());
+  constructor(private adminService: AdminService) {}
 
-  win: boolean = false;
+  // LOADER
+  isVisible: boolean = true;
 
-  // constructor(private adminService: AdminService) { }
+  usersLastWeek: User[];
+  usersLastWeekSubscription: Subscription;
 
-  // users: User[];
+  usersOtherWeeks: User[];
+  usersOtherWeeksSubscription: Subscription;
 
-  // userSubscription: Subscription;
+  ngOnInit() {
+    this.adminService.getAllUsers();
 
-  ngOnInit(): void {
-    console.log(this.dateToday);
-
-    // let date = new Date('December 25, 1995 23:15:30');
-    // let hours = date.getHours();
-
-    // console.log(date, hours);
-    // this.userSubscription = this.adminService.userSubject.subscribe(
-    //   (users: any) => {
-    //     this.users = users;
-    //   }
-    // );
-    // this.adminService.emitUsers();
-    // console.log('on, init', this.users);
-  }
-
-  showList(): void {
-    setTimeout(() => {
-      this.win = !this.win;
+    this.usersLastWeekSubscription = this.adminService.usersLastWeekSubject.subscribe((users: User[]) => {
+      this.usersLastWeek = users;
+      this.isVisible = false; /* LOADER */
+      // console.log('subscrube', this.usersLastWeek);
     });
 
-    console.log(this.win);
+    this.usersOtherWeeksSubscription = this.adminService.usersOtherWeeksSubject.subscribe((users: User[]) => {
+      this.usersOtherWeeks = users;
+      this.isVisible = false; /* LOADRED */
+    })
   }
 
-  ngOnDestroy(): void {
-    // this.userSubscription.unsubscribe();
+  getSub() {
+    console.log(this.usersLastWeek);
+  }
+
+  ngOnDestroy() {
+    this.usersLastWeekSubscription.unsubscribe();
   }
 }

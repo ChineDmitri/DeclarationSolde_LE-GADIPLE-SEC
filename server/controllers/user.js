@@ -1,7 +1,8 @@
 const User = require('../models/User');
 
-exports.create = (req, res, next) => {
+exports.create = (req, res) => {
   const user = new User({
+    dateDeclaration: Date.now(),
     nom: req.body.nom,
     dateFDC_str: req.body.dateFDC_str,
     dateFDC_utc: req.body.dateFDC_utc,

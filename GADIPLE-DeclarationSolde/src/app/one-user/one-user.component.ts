@@ -1,9 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-
-// import { DeclarationService } from '../service/declaration.service';
-// import { AdminService } from '../service/admin.service';
-
-import { User } from '../models/User.model';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-one-user',
@@ -11,18 +6,11 @@ import { User } from '../models/User.model';
   styleUrls: ['./one-user.component.scss'],
 })
 export class OneUserComponent implements OnInit {
-  // user: User;
-  user: User;
+  @Input() name: string;
+  @Input() dateRDC: any;
+  @Input() _id: string;
 
-  constructor(
-    // private declarationService: DeclarationService,
-    // private adminService: AdminService
-  ) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    // this.adminService.getOneUser();
-
-    // this.user = this.adminService.user;
-
-  }
+  ngOnInit(): void {}
 }

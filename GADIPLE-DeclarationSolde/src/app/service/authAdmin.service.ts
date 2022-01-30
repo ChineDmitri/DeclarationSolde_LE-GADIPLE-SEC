@@ -31,26 +31,33 @@ export class AuthAdminService {
   }
 
   onHendlerAuth() {
+    console.log(this.admin);
+
     this.setIsLoading(true);
 
-    this.httpClient.get('http://localhost:3000/api/admin/isAuth', { withCredentials: true }).subscribe(
-      (res: any) => {
-        this.admin.isAuth = res.isAuth;
+    //
+    if (!this.admin.isAuth) {
+      this.httpClient.get('http://localhost:3000/api/admin/isAuth', { withCredentials: true }).subscribe(
+        (res: any) => {
+          this.admin.isAuth = res.isAuth;
 
-        this.setIsLoading(false);
+          this.setIsLoading(false);
 
-        this.onRedirect();
-      },
-      (err: any) => {
-        this.admin.isAuth = err.isAuth;
+          this.onRedirect();
+        },
+        (err: any) => {
+          this.admin.isAuth = err.isAuth;
 
-        this.setIsLoading(false);
+          this.setIsLoading(false);
 
-        console.log('wtf?!');
+          console.log('wtf?!');
 
-        this.onRedirect();
-      },
-    );
+          this.onRedirect();
+        },
+      );
+    } else {
+      this.onRedirect();
+    }
   }
 
   onLogIn(password: string) {

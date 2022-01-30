@@ -10,4 +10,5 @@
     <button class="btn btn-primary col-xs-12" type="submit" [disabled]="adminForm.invalid">Ok</button>
   </form>
 </div>
-<app-spinner></app-spinner>
+
+<app-spinner [isLoad]="!isVisible"></app-spinner>

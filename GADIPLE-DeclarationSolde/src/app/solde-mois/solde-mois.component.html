@@ -1,4 +1,4 @@
-<form [formGroup]="soldForm" (ngSubmit)="onSubmitSolde()">
+<form [formGroup]="soldForm" (ngSubmit)="onSubmitSolde()" *ngIf="!isVisible">
   <li
     [ngClass]="{
       'list-group-item': true,
@@ -59,3 +59,5 @@
     Ok
   </button>
 </form>
+
+<app-spinner [isLoad]="isVisible"></app-spinner>

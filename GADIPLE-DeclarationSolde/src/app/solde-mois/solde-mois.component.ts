@@ -10,6 +10,8 @@ import { DeclarationService } from '../service/declaration.service';
   styleUrls: ['./solde-mois.component.scss'],
 })
 export class SoldeMoisComponent implements OnInit, OnDestroy {
+  isVisible: boolean = false; /* LOADER */
+
   soldForm: FormGroup;
 
   MonthPaySubscription: Subscription;
@@ -69,6 +71,8 @@ export class SoldeMoisComponent implements OnInit, OnDestroy {
 
   onSubmitSolde(): void {
     // console.log(arraySoldeOfMonth)
+    this.isVisible = true; /* LOADER */
+
     this.declarationService.saveUserToServer(this.soldForm.value);
 
     // this.declarationService

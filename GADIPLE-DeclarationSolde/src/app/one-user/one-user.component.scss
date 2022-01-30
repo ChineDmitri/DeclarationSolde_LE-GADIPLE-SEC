@@ -1,4 +1,14 @@
+.list-group-item {
+  padding: 5px 10px;
+}
+
 .border-space {
-  margin: 10px;
+  margin: 5px;
   justify-content: space-between;
+}
+
+.one-user {
+  &:hover {
+    transform: scale(1.02);
+  }
 }

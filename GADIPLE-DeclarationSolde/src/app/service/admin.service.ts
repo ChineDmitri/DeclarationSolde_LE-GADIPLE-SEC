@@ -1,136 +1,53 @@
-// import { HttpClient } from '@angular/common/http';
-// import { Injectable } from '@angular/core';
-// import { Router } from '@angular/router';
-// import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
 
-// import { Admin } from '../models/Admin.model';
-// import { User } from '../models/User.model';
+import { User } from '../models/User.model';
+import { AuthAdminService } from './authAdmin.service';
 
-// @Injectable()
-// export class AdminService {
-//   userSubject = new Subject<any[]>();
+@Injectable()
+export class AdminService {
+  usersLastWeekSubject = new Subject<User[]>();
+  usersOtherWeeksSubject = new Subject<User[]>();
 
-//   constructor(private httpClient: HttpClient, private router: Router) {}
+  usersLastWeek: User[];
+  usersOtherWeeks: User[];
 
-//   admin: Admin = {
-//     password: '',
-//     isAuth: false,
-//   };
+  constructor(private httpClient: HttpClient, public authAdminService: AuthAdminService) {}
 
-//   users: any[] = [
-//     {
-//       MonthSolde: [],
-//       dateDeclaration: '',
-//       dateFDC_str: '',
-//       dateFDC_utc: '',
-//       nom: '',
-//       start: true,
-//     },
-//   ];
-//   user: User;
+  // getWeek(date: Date) {
+  //   var onejan = new Date(date.getFullYear(), 0, 1);
+  // return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
+  // }
 
-//   emitUsers() {
-//     this.userSubject.next(this.users.slice());
-//   }
+  setUsersSubject() {
+    this.usersLastWeekSubject.next(this.usersLastWeek.slice());
+    this.usersOtherWeeksSubject.next(this.usersOtherWeeks.slice());
+  }
 
-//   // auth() {
-//   //   this.httpClient
-//   //     .get(`http://localhost:3000/api/admin/all`, {
-//   //       withCredentials: true,
-//   //     })
-//   //     .subscribe(
-//   //       (res: any) => {
-//   //         this.admin.isAuth = res.isAuth;
+  getAllUsers(): void {
+    let dateLastWeek = new Date(Date.now() - 86400000 * 7);
 
-//   //         this.users = res.users;
+    this.httpClient
+      .get<any[]>('http://localhost:3000/api/admin/user/all', { withCredentials: true })
+      .subscribe(
+        (res: any) => {
+          this.usersLastWeek = res.users.filter(
+            (user: User) => new Date(user.dateDeclaration) > dateLastWeek,
+          );
+          this.usersOtherWeeks = res.users.filter(
+            (user: User) => new Date(user.dateDeclaration) < dateLastWeek,
+          );
 
-//   //         this.onRedirect();
-//   //       },
-//   //       (err: any) => {
-//   //         console.log(err);
+          this.setUsersSubject();
 
-//   //         this.admin.isAuth = err.isAuth;
-
-//   //         this.onRedirect();
-//   //       }
-//   //     );
-
-//   //   this.emitUsers();
-//   // }
-
-//   getAllUsers(): any {
-//     this.httpClient.get('http://localhost:3000/api/admin/all', { withCredentials: true }).subscribe(
-//       (res: any) => {
-//         this.users = res.users;
-
-//         this.admin.isAuth = res.isAuth;
-
-//         // this.onRedirect();
-//         this.emitUsers();
-
-//         // this.onRedirect();
-//       },
-//       (err: any) => {
-//         this.admin.isAuth = err.isAuth;
-
-//         // this.onRedirect();
-//       },
-//     );
-//   }
-
-//   getOneUser() {
-//     this.httpClient
-//       .get('http://localhost:3000/api/admin/61dc9525d7ea582219135753', {
-//         withCredentials: true,
-//       })
-//       .subscribe(
-//         (res: any) => {
-//           this.user = res.user;
-
-//           this.admin.isAuth = res.isAuth;
-//         },
-//         (err: any) => {
-//           this.admin.isAuth = err.isAuth;
-//         },
-//       );
-//   }
-
-//   testAuth(): void {
-//     if (!this.admin.isAuth) {
-//       this.getAllUsers();
-//       this.onRedirect();
-//     }
-//     console.log(this.admin);
-//   }
-
-//   logIn(password: string) {
-//     this.admin.password = password;
-
-//     this.httpClient
-//       .post<Admin>('http://localhost:3000/api/admin/login', this.admin, { withCredentials: true })
-//       .subscribe(
-//         (res: any) => {
-//           console.log('get login user', res);
-
-//           this.admin.password = '';
-
-//           this.admin.isAuth = res.isAuth;
-
-//           this.onRedirect();
-//         },
-//         (err: any) => {
-//           console.log(err);
-
-//           this.admin.isAuth = err.isAuth;
-//         },
-//       );
-//   }
-
-//   onRedirect(): void {
-//     if (this.admin.isAuth) {
-//       this.router.navigate(['/admin/allusers']);
-//     } else {
-//       this.router.navigate(['/admin']);
-//     }
-//   }
-// }
+          // console.log('adm service', this.usersLastWeek);
+        },
+        (err: any) => {
+          console.log(err);
+          this.authAdminService.admin.isAuth = err.isAuth;
+          this.authAdminService.onRedirect();
+        },
+      );
+  }
+}
