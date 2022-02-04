@@ -7,6 +7,7 @@ import { AuthAdminService } from './authAdmin.service';
 
 @Injectable()
 export class AdminService {
+  // Subject of users declared last 7 days and other users
   usersLastWeekSubject = new Subject<User[]>();
   usersOtherWeeksSubject = new Subject<User[]>();
 
@@ -15,11 +16,7 @@ export class AdminService {
 
   constructor(private httpClient: HttpClient, public authAdminService: AuthAdminService) {}
 
-  // getWeek(date: Date) {
-  //   var onejan = new Date(date.getFullYear(), 0, 1);
-  // return Math.ceil((((this - onejan) / 86400000) + onejan.getDay() + 1) / 7);
-  // }
-
+  // Setter for all users (users declared last week and other users)
   setUsersSubject() {
     this.usersLastWeekSubject.next(this.usersLastWeek.slice());
     this.usersOtherWeeksSubject.next(this.usersOtherWeeks.slice());
@@ -38,6 +35,10 @@ export class AdminService {
           this.usersOtherWeeks = res.users.filter(
             (user: User) => new Date(user.dateDeclaration) < dateLastWeek,
           );
+
+          // Reverse users array for descending view
+          this.usersLastWeek.reverse();
+          this.usersOtherWeeks.reverse();
 
           this.setUsersSubject();
 

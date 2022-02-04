@@ -1,3 +1,5 @@
+/* AUTH SERVICE FOR ADMINISTATOR */
+
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -17,25 +19,25 @@ export class AuthAdminService {
   // TRUE if loading in progress; FALSE if response from server finished;
   isLoading = new BehaviorSubject(false);
 
-  // onLoading(): Observable<boolean> {
-  //   return this.loading;
-  // }
-
+  // getter the state of a isLoading
   getIsLoading(): Observable<boolean> {
     return this.isLoading;
   }
 
+  // setter the state to isLoading
   setIsLoading(state: boolean): void {
-    // console.log('onLoading', state);
     this.isLoading.next(state);
   }
 
+  // Verification a cookies for authentication in AdminPanel
   onHendlerAuth() {
-    console.log(this.admin);
+    // console.log(this.admin);
 
+    // start loading
     this.setIsLoading(true);
 
-    //
+    // if admin is auth: No Chec Cookies (HttpOnly) ELSE
+    // else we will execute a redirection
     if (!this.admin.isAuth) {
       this.httpClient.get('http://localhost:3000/api/admin/isAuth', { withCredentials: true }).subscribe(
         (res: any) => {
@@ -50,8 +52,6 @@ export class AuthAdminService {
 
           this.setIsLoading(false);
 
-          console.log('wtf?!');
-
           this.onRedirect();
         },
       );
@@ -60,6 +60,7 @@ export class AuthAdminService {
     }
   }
 
+  // Authenticate as administrator
   onLogIn(password: string) {
     this.setIsLoading(true);
 
@@ -88,6 +89,7 @@ export class AuthAdminService {
       );
   }
 
+  // Redirection in AllUsers if auth ok!
   onRedirect(): void {
     if (this.admin.isAuth) {
       this.router.navigate(['/admin/allusers']);
