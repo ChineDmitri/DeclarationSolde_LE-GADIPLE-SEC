@@ -10,11 +10,12 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'GADIPLE-DeclarationSolde';
 
+  dateToday = new Date(Date.now());
+
   // constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
     // this.adminService.getAllUsers();
+    // this.dateToday.toLocaleString('de-DE');
   }
-
-  dateToday = new Date(Date.now());
 }

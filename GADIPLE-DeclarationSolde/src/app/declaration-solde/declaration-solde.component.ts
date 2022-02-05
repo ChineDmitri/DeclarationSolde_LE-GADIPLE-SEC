@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { DeclarationService } from '../service/declaration.service';
-import { User } from '../models/User.model';
 import { Subscription } from 'rxjs';
+
+import { DeclarationService } from '../service/declaration.service';
+
+import { User } from '../models/User.model';
 
 @Component({
   selector: 'app-declaration-solde',
@@ -35,6 +37,7 @@ export class DeclarationSoldeComponent implements OnInit, OnDestroy {
       dateFDC: ['', [Validators.required]],
     });
   }
+
 
   onSubmitBio() {
     const formValue = this.userForm.value;

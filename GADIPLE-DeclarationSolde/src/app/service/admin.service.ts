@@ -14,6 +14,8 @@ export class AdminService {
   usersLastWeek: User[];
   usersOtherWeeks: User[];
 
+  allUsers: User[]; // all user for using in the user.components
+
   constructor(private httpClient: HttpClient, public authAdminService: AuthAdminService) {}
 
   // Setter for all users (users declared last week and other users)
@@ -29,6 +31,10 @@ export class AdminService {
       .get<any[]>('http://localhost:3000/api/admin/user/all', { withCredentials: true })
       .subscribe(
         (res: any) => {
+
+          this.allUsers = res.users;
+
+          // filtre for users last 7 day or other
           this.usersLastWeek = res.users.filter(
             (user: User) => new Date(user.dateDeclaration) > dateLastWeek,
           );

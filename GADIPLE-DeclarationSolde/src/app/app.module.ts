@@ -19,6 +19,7 @@ import { SoldeMoisComponent } from './solde-mois/solde-mois.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { OneUserComponent } from './one-user/one-user.component';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { UserComponent } from './user/user.component';
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent },
@@ -26,7 +27,7 @@ const appRoutes: Routes = [
   { path: 'declaration', component: DeclarationSoldeComponent },
   { path: 'admin', component: AdminSpaceComponent },
   { path: 'admin/allusers', canActivate: [AuthAdminGuard], component: UserListComponent },
-  { path: 'admin/user/:id', canActivate: [AuthAdminGuard], component: OneUserComponent },
+  { path: 'admin/user/:id', canActivate: [AuthAdminGuard], component: UserComponent },
 ];
 
 @NgModule({
@@ -39,6 +40,7 @@ const appRoutes: Routes = [
     UserListComponent,
     OneUserComponent,
     SpinnerComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,

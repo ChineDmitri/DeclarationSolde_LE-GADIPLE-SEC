@@ -1,0 +1,13 @@
+<ul class="list-group">
+  <li class="list-group-item">
+    <span>Nom: {{ user?.nom }} </span>
+    <br />
+    <button class="btn btn-danger btn-size"><i class="fas fa-times-circle"></i></button>
+  </li>
+
+  <li class="list-group-item margin-top-10px" *ngFor="let solde of user?.MonthSolde; let idx = index">
+    <span>Mois: {{ monthPay[idx] | date: 'MMMM, y' }}</span>
+    <br />
+    <span>Total: {{ solde }} €</span>
+  </li>
+</ul>
