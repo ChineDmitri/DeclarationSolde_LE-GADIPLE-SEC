@@ -35,7 +35,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.usersOtherWeeksSubscription = this.adminService.usersOtherWeeksSubject.subscribe((users: User[]) => {
       this.usersOtherWeeks = users;
       this.isVisible = false; /* LOADRED */
-    })
+    });
   }
 
   getSub() {

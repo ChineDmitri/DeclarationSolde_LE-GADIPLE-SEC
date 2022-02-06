@@ -23,7 +23,7 @@
 
   <ul class="user-list user-list-slider">
     <app-one-user
-      *ngFor="let user of usersOtherWeeks"
+      *ngFor="let user of usersOtherWeeks; let idx = index"
       [_id]="user._id"
       [name]="user.nom"
       [dateRDC]="user.dateFDC_utc"

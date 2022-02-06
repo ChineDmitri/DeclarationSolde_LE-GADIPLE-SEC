@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 
 import { User } from '../models/User.model';
 import { AuthAdminService } from './authAdmin.service';
@@ -16,6 +16,8 @@ export class AdminService {
 
   allUsers: User[]; // all user for using in the user.components
 
+  stateModalDelete = new BehaviorSubject(false); // state of the modal windows for delete user
+
   constructor(private httpClient: HttpClient, public authAdminService: AuthAdminService) {}
 
   // Setter for all users (users declared last week and other users)
@@ -24,6 +26,13 @@ export class AdminService {
     this.usersOtherWeeksSubject.next(this.usersOtherWeeks.slice());
   }
 
+  // set state wondows modal for delete
+  setModalDelete(state: boolean): void {
+    this.stateModalDelete.next(!state);
+  }
+
+  deleteOneUser(id: string): void {}
+
   getAllUsers(): void {
     let dateLastWeek = new Date(Date.now() - 86400000 * 7);
 
@@ -31,11 +40,10 @@ export class AdminService {
       .get<any[]>('http://localhost:3000/api/admin/user/all', { withCredentials: true })
       .subscribe(
         (res: any) => {
-
           this.allUsers = res.users;
 
           // filtre for users last 7 day or other
-          this.usersLastWeek = res.users.filter(
+          this.usersLastWeek = this.allUsers.filter(
             (user: User) => new Date(user.dateDeclaration) > dateLastWeek,
           );
           this.usersOtherWeeks = res.users.filter(

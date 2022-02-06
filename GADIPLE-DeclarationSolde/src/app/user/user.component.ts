@@ -1,16 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { AdminService } from '../service/admin.service';
 
 import { User } from '../models/User.model';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: ['./user.component.scss'],
 })
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
   constructor(private route: ActivatedRoute, private adminService: AdminService) {}
 
   id: string = this.route.snapshot.params['id']; // id from params
@@ -19,6 +20,9 @@ export class UserComponent implements OnInit {
   monthPay: Array<any> = [];
 
   dateTest: any = Date.now();
+
+  isVisibleModalDelete: boolean = false;
+  modalDelete: Subscription; // subscription en state windows delete
 
   ngOnInit(): void {
     this.user = this.adminService.allUsers.find((user) => user._id === this.id); // search in array all users
@@ -31,5 +35,17 @@ export class UserComponent implements OnInit {
 
       this.monthPay.push(copyDateFDC_utc); //creation array of motnhs pay
     }
+
+    this.modalDelete = this.adminService.stateModalDelete.subscribe((state) => {
+      this.isVisibleModalDelete = state;
+    });
+  }
+
+  onDelete(): void {
+    this.adminService.setModalDelete(this.isVisibleModalDelete);
+  }
+
+  ngOnDestroy(): void {
+    this.modalDelete.unsubscribe()
   }
 }
