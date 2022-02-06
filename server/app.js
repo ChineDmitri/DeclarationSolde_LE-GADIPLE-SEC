@@ -2,7 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-// const path = require('path');
+const path = require('path');
 const env = require('dotenv');
 
 env.config();
@@ -31,6 +31,9 @@ app.use((req, res, next) => {
 
 app.use(cookieParser());
 app.use(bodyParser.json());
+
+/* Folder with public files */
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 /* MODULES ROUTES */
 const userRoutes = require('./routes/user');

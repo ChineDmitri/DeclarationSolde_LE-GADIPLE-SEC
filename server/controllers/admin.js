@@ -3,7 +3,7 @@ const User = require('../models/User');
 
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-// const dotenv = require('dotenv').config();
+const path = require('path');
 
 exports.modification = (req, res) => {
   bcrypt
@@ -79,8 +79,17 @@ exports.getOneUser = (req, res) => {
       res.status(200).json({ isAuth: true, user });
     })
     .catch((err) => {
-      res.status(500).then({ isAuth: true, err });
+      res.status(500).json({ isAuth: true, err });
     });
+};
+
+// Creation Excel file 'xlsx' with user
+exports.getFile = (req, res) => {
+  const file_dir = path.join(__dirname, '..', 'public', 'test.xlsx');
+
+  console.log(file_dir);
+
+  res.sendFile(file_dir);
 };
 
 exports.cookieHandler = (req, res) => {
