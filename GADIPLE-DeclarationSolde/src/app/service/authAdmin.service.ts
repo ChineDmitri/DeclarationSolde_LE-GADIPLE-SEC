@@ -45,7 +45,7 @@ export class AuthAdminService {
     // if admin is auth: No Chec Cookies (HttpOnly) ELSE
     // else we will execute a redirection
     if (!this.admin.isAuth) {
-      this.httpClient.get('http://localhost:3000/api/admin/isAuth', { withCredentials: true }).subscribe(
+      this.httpClient.get('https://gadiple.herokuapp.com/api/admin/isAuth', { withCredentials: true }).subscribe(
         (res: any) => {
           this.admin.isAuth = res.isAuth;
 
@@ -72,7 +72,7 @@ export class AuthAdminService {
 
     this.admin.password = password;
     this.httpClient
-      .post<Admin>('http://localhost:3000/api/admin/login', { password }, { withCredentials: true })
+      .post<Admin>('https://gadiple.herokuapp.com/api/admin/login', { password }, { withCredentials: true })
       .subscribe(
         (res: any) => {
           // console.log(res);

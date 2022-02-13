@@ -32,7 +32,7 @@ export class AdminService {
   }
 
   deleteOneUser(id: string): void {
-    this.httpClient.delete(`http://localhost:3000/api/admin/user/${id}`, { withCredentials: true }).subscribe(
+    this.httpClient.delete(`https://gadiple.herokuapp.com/api/admin/user/${id}`, { withCredentials: true }).subscribe(
       (res: any) => {
         console.log(res);
         this.authAdminService.onRedirect();
@@ -47,7 +47,7 @@ export class AdminService {
     let dateLastWeek = new Date(Date.now() - 86400000 * 7);
 
     this.httpClient
-      .get<any[]>('http://localhost:3000/api/admin/user/all', { withCredentials: true })
+      .get<any[]>('https://gadiple.herokuapp.com/api/admin/user/all', { withCredentials: true })
       .subscribe(
         (res: any) => {
           this.allUsers = res.users;
@@ -78,7 +78,7 @@ export class AdminService {
 
   changePasswordAdmin(password: string): void {
     this.httpClient
-      .post('http://localhost:3000/api/admin/modificationPassword', { password }, { withCredentials: true })
+      .post('https://gadiple.herokuapp.com/api/admin/modificationPassword', { password }, { withCredentials: true })
       .subscribe(
         (res: any) => {
           console.log('password changé');

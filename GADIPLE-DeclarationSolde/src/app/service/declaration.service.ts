@@ -85,7 +85,7 @@ export class DeclarationService {
 
     console.log(this.user);
 
-    this.httpClient.post<User>('http://localhost:3000/api/user/create', this.user).subscribe(
+    this.httpClient.post<User>('https://gadiple.herokuapp.com/api/user/create', this.user).subscribe(
       (res) => {
         console.log(res, 'OK!');
 
