@@ -5,16 +5,15 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const path = require('path');
 
-exports.modification = (req, res) => {
+exports.modificationPassword = (req, res) => {
   bcrypt
     .hash(req.body.password, 10)
     .then((hashPassword) => {
-      const admin = new Admin({
-        password: hashPassword,
-      });
+      let password = hashPassword;
 
-      admin
-        .save()
+      console.log('hash', password);
+
+      Admin.updateOne({ _id: process.env.ADMIN_ID }, { password })
         .then(() => {
           res.status(201).json({
             message: 'Password was changed!',
@@ -83,13 +82,10 @@ exports.getOneUser = (req, res) => {
     });
 };
 
-// Creation Excel file 'xlsx' with user
-exports.getFile = (req, res) => {
-  const file_dir = path.join(__dirname, '..', 'public', 'test.xlsx');
-
-  console.log(file_dir);
-
-  res.sendFile(file_dir);
+exports.deleteOneUser = (req, res) => {
+  User.deleteOne({ _id: req.params.id })
+    .then(() => res.status(200).json({ message: 'User was has bedd deleted!' }))
+    .catch((err) => res.status(500).json(err));
 };
 
 exports.cookieHandler = (req, res) => {
@@ -109,3 +105,18 @@ exports.cookieHandler = (req, res) => {
     res.status(401).json({ ...err, isAuth: false });
   }
 };
+
+exports.changeAdminPassword = (req, res) => {
+  // bcrypt
+  // admin.updateOne({ _id: process.env.ADMIN_ID }, {passwo})
+};
+
+// Creation Excel file 'xlsx' with user
+// EN TEST... :D
+/* exports.getFile = (req, res) => {
+  const file_dir = path.join(__dirname, '..', 'public', 'test.xlsx');
+
+  console.log(file_dir);
+
+  res.sendFile(file_dir);
+}; */

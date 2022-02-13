@@ -12,7 +12,7 @@ exports.create = (req, res) => {
   user
     .save()
     .then(() => {
-      res.status(200).json({ msg: 'OK!' });
+      res.status(200).json({ msg: 'Votre déclaration est enregistrée!' });
     })
     .catch((err) => {
       res.status(500).json({ err });

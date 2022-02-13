@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
 
     Admin.findOne({ _id: adminId })
       .then((admin) => {
-        console.log('find one', admin._id.toString());
+        // console.log('find one', admin._id.toString());
 
         if (admin._id.toString() == adminId) {
           next();
