@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -10,7 +11,11 @@ import { AdminService } from '../service/admin.service';
   styleUrls: ['./modal-delete-user.component.scss'],
 })
 export class ModalDeleteUserComponent implements OnInit, OnDestroy {
-  constructor(private adminService: AdminService, private route: ActivatedRoute) {}
+  constructor(
+    private adminService: AdminService,
+    private route: ActivatedRoute,
+    private httpClient: HttpClient,
+  ) {}
 
   modalDelete: Subscription; // subscription en state windows delete
   isVisibleModalDelete: boolean;
@@ -26,10 +31,10 @@ export class ModalDeleteUserComponent implements OnInit, OnDestroy {
   }
 
   onAcceptDelete(): void {
-    console.log(this.route.snapshot.params['id']);
+    this.adminService.deleteOneUser(this.route.snapshot.params['id']);
   }
 
   ngOnDestroy(): void {
-    this.modalDelete.unsubscribe()
+    this.modalDelete.unsubscribe();
   }
 }

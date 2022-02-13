@@ -47,6 +47,6 @@ export class AdminSpaceComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // this.isLoadingSubscription.unsubscribe();
+    this.isLoadingSubscription.unsubscribe();
   }
 }

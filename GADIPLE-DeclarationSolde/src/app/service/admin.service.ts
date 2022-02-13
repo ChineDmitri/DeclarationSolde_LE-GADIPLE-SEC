@@ -31,7 +31,17 @@ export class AdminService {
     this.stateModalDelete.next(!state);
   }
 
-  deleteOneUser(id: string): void {}
+  deleteOneUser(id: string): void {
+    this.httpClient.delete(`http://localhost:3000/api/admin/user/${id}`, { withCredentials: true }).subscribe(
+      (res: any) => {
+        console.log(res);
+        this.authAdminService.onRedirect();
+      },
+      (err) => {
+        console.log(err);
+      },
+    );
+  }
 
   getAllUsers(): void {
     let dateLastWeek = new Date(Date.now() - 86400000 * 7);
@@ -62,6 +72,21 @@ export class AdminService {
           console.log(err);
           this.authAdminService.admin.isAuth = err.isAuth;
           this.authAdminService.onRedirect();
+        },
+      );
+  }
+
+  changePasswordAdmin(password: string): void {
+    this.httpClient
+      .post('http://localhost:3000/api/admin/modificationPassword', { password }, { withCredentials: true })
+      .subscribe(
+        (res: any) => {
+          console.log('password changé');
+
+          this.authAdminService.onRedirect()
+        },
+        (err: any) => {
+          console.log(err);
         },
       );
   }

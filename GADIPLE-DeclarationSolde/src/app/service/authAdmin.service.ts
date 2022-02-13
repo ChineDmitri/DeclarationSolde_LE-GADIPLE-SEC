@@ -16,6 +16,9 @@ export class AuthAdminService {
     isAuth: false,
   };
 
+  //auth or non
+  isAuth = new BehaviorSubject(false);
+
   // TRUE if loading in progress; FALSE if response from server finished;
   isLoading = new BehaviorSubject(false);
 
@@ -27,6 +30,9 @@ export class AuthAdminService {
   // setter the state to isLoading
   setIsLoading(state: boolean): void {
     this.isLoading.next(state);
+
+    // state isAuth for menu
+    this.isAuth.next(this.admin.isAuth);
   }
 
   // Verification a cookies for authentication in AdminPanel
@@ -71,9 +77,9 @@ export class AuthAdminService {
         (res: any) => {
           // console.log(res);
 
-          this.setIsLoading(false);
-
           this.admin.isAuth = res.isAuth;
+
+          this.setIsLoading(false);
 
           this.onRedirect();
         },

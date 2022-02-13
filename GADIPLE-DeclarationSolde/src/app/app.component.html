@@ -10,6 +10,9 @@
       <li routerLinkActive="active">
         <a routerLink="admin">Admin</a>
       </li>
+      <li routerLinkActive="active" *ngIf="changePassIsVisible">
+        <a routerLink="admin/changepassword">Changer mot de passe</a>
+      </li>
     </ul>
     <div class="container-fluid navbar-right">
       Aujourd'hui <b>{{ dateToday | date: 'EEEE, MMMM d, y' }}</b>

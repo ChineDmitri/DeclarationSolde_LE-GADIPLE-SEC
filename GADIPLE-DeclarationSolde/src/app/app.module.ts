@@ -21,6 +21,7 @@ import { OneUserComponent } from './one-user/one-user.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { UserComponent } from './user/user.component';
 import { ModalDeleteUserComponent } from './modal-delete-user/modal-delete-user.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent },
@@ -29,7 +30,8 @@ const appRoutes: Routes = [
   { path: 'admin', component: AdminSpaceComponent },
   { path: 'admin/allusers', canActivate: [AuthAdminGuard], component: UserListComponent },
   { path: 'admin/user/:id', canActivate: [AuthAdminGuard], component: UserComponent },
-  { path: 'test', component: ModalDeleteUserComponent },
+  { path: 'admin/changepassword', canActivate: [AuthAdminGuard], component: ChangePasswordComponent },
+  // { path: 'test', component: ModalDeleteUserComponent },
 ];
 
 @NgModule({
@@ -44,6 +46,7 @@ const appRoutes: Routes = [
     SpinnerComponent,
     UserComponent,
     ModalDeleteUserComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
